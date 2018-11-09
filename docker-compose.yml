@@ -1,0 +1,20 @@
+version: '3'
+services:
+  db:
+    image: postgres:9.6.10-alpine
+    ports:
+    - "5432:5432"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  idp:
+    build: ./IDP
+    volumes:
+      - ./IDP:/app
+    user: django
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
